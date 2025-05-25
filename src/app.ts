@@ -7,9 +7,15 @@ let emergencyTriggered = false;
 
 
 app.post("/emergency", (req, res) => {
-    emergencyTriggered = true;
-    console.log("🚨 Emergência acionada!");
-    res.status(200).json({ message: "Emergência acionada com sucesso!" });
+    try {
+        emergencyTriggered = true;
+        console.log("🚨 Emergência acionada!");
+        console.log("Status atual:", { emergency: emergencyTriggered });
+        res.status(200).json({ message: "Emergência acionada com sucesso!" });
+    } catch (error) {
+        console.error("❌ Erro ao acionar emergência:", error);
+        res.status(500).json({ error: "Erro ao acionar emergência" });
+    }
 });
 
 app.get("/status", (req, res) => {
